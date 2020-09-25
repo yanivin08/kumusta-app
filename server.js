@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const port = process.env.PORT || 5000;
 
 const app = express();
 
@@ -15,6 +16,7 @@ mongoDB.once('open', function() {
    console.log("MongodDB Connected!");
 });
 
-const port = process.env.PORT || 5000;
+app.use('/user', require('./routes/User'));
+app.use('/chat', require('./routes/Chat'));
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
