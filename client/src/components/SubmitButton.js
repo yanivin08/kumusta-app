@@ -5,6 +5,7 @@ export default class SubmitButton extends React.Component {
         return (
             <div className="submitbutton">
                 <input
+                    className={this.props.classname}
                     type="button"
                     value={this.props.value}
                     onClick={this.props.onClick}

@@ -1,12 +1,13 @@
 import React from 'react'
 import InputField from './InputField'
 import SubmitButton from './SubmitButton'
+import Spacer from './Spacer'
 
-export default class LoginForm extends React.Component {
+export default class RegisterForm extends React.Component {
     render() {
         return (
-            <div className="column loginform">
-                <h3 className="title is-3">Login</h3>
+            <div className="column registerform">
+                <h3 className="title is-3">Register</h3>
                 <div className="field">
                     <div className="control">
                         <InputField 
@@ -16,7 +17,7 @@ export default class LoginForm extends React.Component {
                         />
                     </div>
                 </div>
-                
+
                 <div className="field">
                     <div className="control">
                         <InputField 
@@ -35,6 +36,7 @@ export default class LoginForm extends React.Component {
                         />
                     </div>
                 </div>
+
             </div>
         );
     }
