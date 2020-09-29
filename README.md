@@ -2,9 +2,11 @@
 
 Steps:
 
-1. npm install
-2. npm run client-install / npm install in client folder (if script is not working properly)
-3. npm run dev
+1. cd kumusta-app
+2. npm install
+3. cd client
+4. npm install
+5. go back to kumusta-app folder and npm run dev
 
 Folder Structure:
 
