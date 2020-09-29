@@ -9,6 +9,18 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    is_logged: {
+        type: Boolean,
+        default: false
+    },
+    access_token: {
+        type: String,
+        default: ''
+    },
+    refresh_token: {
+        type: String,
+        default: ''
     }
 });
 
