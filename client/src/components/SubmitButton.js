@@ -3,15 +3,16 @@ import React from 'react'
 export default class SubmitButton extends React.Component {
     render() {
         return (
-            <div className="submitbutton">
-                <input
-                    className={this.props.classname}
-                    type="button"
-                    value={this.props.value}
-                    onClick={this.props.onClick}
+            // <div className="submitbutton">
+                <button
+                    className={ this.props.classname }
+                    disabled={ this.props.disabled }
+                    value={ this.props.value }
+                    onClick={ () => this.props.onclick() }
                 >
-                </input>
-            </div>
+                    { this.props.text }
+                </button>
+            // </div>
         );
     }
 }
