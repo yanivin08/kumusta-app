@@ -3,18 +3,17 @@ const bcrypt = require('bcryptjs');
 const router = express.Router();
 const bodyParser = require('body-parser');
 
-const User = require('../models/User');
+const User = require('../models/user');
 
-router.get('/', (req,res)=>{
+router.get('/', (req, res)=>{
     res.send('You are connected to API for users.');
-})
+});
 
 router.get('/welcome', (req,res)=>{
     res.send('Welcome message from user api.');
-})
+});
 
-router.post('/register', (req,res)=>{
-
+router.post('/register', (req, res)=>{
     const { name, email, password, password2 } = req.body;
     let errors = [];
 

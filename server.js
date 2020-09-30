@@ -14,7 +14,10 @@ app.use(bodyParser.json());
 //set up database
 const db = require('./config/keys').mongoURI;
 
-mongoose.connect(db, { useNewUrlParser: true })
+mongoose.connect(db, { 
+   useNewUrlParser: true,
+   useUnifiedTopology: true
+}); // added useUnifiedTopology to prevent deprecation warning
 
 const mongoDB = mongoose.connection;
 mongoDB.on('error', console.error.bind(console, 'connection error:'));
