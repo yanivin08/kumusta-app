@@ -8,6 +8,10 @@ router.get('/', (req,res)=>{
     res.send('You are connected to API for users.');
 })
 
+router.get('/welcome', (req,res)=>{
+    res.send('Welcome message from user api.');
+})
+
 router.post('/register', (req,res)=>{
 
     const { name, email, password, password2 } = req.body;
@@ -26,13 +30,18 @@ router.post('/register', (req,res)=>{
     }
 
     if(errors.length > 0){
-        res.send('register', {
-            errors,
-            name,
-            email,
-            password,
-            password2
-        });
+        // res.send('register', {
+        //     errors,
+        //     name,
+        //     email,
+        //     password,
+        //     password2
+        // });
+        res.send({
+            success: false,
+            msg: "Error occurs, please try again.",
+            err_data: errors
+        })
 
     }else{
         //validation passed
@@ -41,12 +50,10 @@ router.post('/register', (req,res)=>{
                 if(user){
                     //user exist
                     errors.push({ msg: 'Email is already registered' })
-                    res.send('register', {
-                        errors,
-                        name,
-                        email,
-                        password,
-                        password2
+                    res.send({
+                        success: false,
+                        msg: 'Email is already registered',
+                        err_data: errors
                     });
                 } else {
                     const newUser = new User({
@@ -64,7 +71,10 @@ router.post('/register', (req,res)=>{
                             //save user
                             newUser.save()
                                 .then(user => {
-                                    req.send('success_msg', 'You are now successfully registered!')
+                                    res.send({
+                                        success: true,
+                                        msg: 'You are now successfully registered!'
+                                    })
                                     res.redirect('./login')
                                 })
                                 .catch(err => console.log(err));
