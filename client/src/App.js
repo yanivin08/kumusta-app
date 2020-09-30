@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
-import { Provider } from 'react-redux';
-import store from './store';
+//import { Provider } from 'react-redux';
+//import store from './store';
 
 class App extends React.Component {
 
@@ -18,14 +18,14 @@ class App extends React.Component {
 
   render(){
     return (
-      <Provider store={store}>
+      //<Provider store={store}>
         <div className="app">
           <h1 className="title">KUMUSTA - CHAT APP</h1>
           <div className="container">
             <RegisterForm />
           </div>
         </div>
-      </Provider>
+      //</Provider>
     );
   }
 }
