@@ -31,7 +31,7 @@ export default class LoginForm extends React.Component {
                     <div className="control">
                         <SubmitButton 
                             classname="button is-info"
-                            value="REGISTER"
+                            value="LOG IN"
                         />
                     </div>
                 </div>
