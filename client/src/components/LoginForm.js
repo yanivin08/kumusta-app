@@ -4,6 +4,7 @@ import SubmitButton from './SubmitButton'
 
 export default class LoginForm extends React.Component {
     render() {
+        console.log(this.props.showForms);
         return (
             <div className="column loginform">
                 <h3 className="title is-3">Login</h3>
@@ -28,11 +29,19 @@ export default class LoginForm extends React.Component {
                 </div>
 
                 <div className="field">
-                    <div className="control">
-                        <SubmitButton 
-                            classname="button is-info"
-                            value="LOG IN"
-                        />
+                    <div className="level">
+                        <div className="level-left">
+                            <div className="control">
+                                <SubmitButton 
+                                    classname="button is-info"
+                                    value="LOG IN"
+                                    text="Login"
+                                />
+                            </div>
+                        </div>
+                        <div className="level-right">
+                            <a onClick={this.props.showForms}>Register</a>
+                        </div>
                     </div>
                 </div>
             </div>

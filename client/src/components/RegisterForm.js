@@ -81,7 +81,7 @@ export default class RegisterForm extends React.Component {
     render() {
         return (
             <div className="column registerform">
-                <h3 className="title is-3">Registration</h3>
+                <h3 className="title is-3">Register</h3>
                 <div className="field">
                     <label className="label">Username</label>
                     <div className="control">
@@ -131,13 +131,20 @@ export default class RegisterForm extends React.Component {
                 </div>
 
                 <div className="field">
-                    <div className="control">
-                        <SubmitButton 
-                            classname="submitbutton button is-normal is-info"
-                            text="REGISTER"
-                            disabled={ this.state.buttonDisabled }
-                            onclick={ () => this.register() }
-                        />
+                    <div className="level">
+                        <div className="level-right">
+                            <div className="control">
+                                <SubmitButton 
+                                    classname="submitbutton button is-normal is-info"
+                                    text="REGISTER"
+                                    disabled={ this.state.buttonDisabled }
+                                    onclick={ () => this.register() }
+                                />
+                            </div>
+                        </div>
+                        <div className="level-left">
+                            <a onClick={this.props.showForms}>Login</a>
+                        </div>
                     </div>
                 </div>
 
