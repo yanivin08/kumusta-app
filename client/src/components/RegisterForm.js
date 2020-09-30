@@ -1,6 +1,7 @@
 import React from 'react'
 import InputField from './InputField'
 import SubmitButton from './SubmitButton'
+import Notification from './Notification'
 
 export default class RegisterForm extends React.Component {
 
@@ -11,7 +12,12 @@ export default class RegisterForm extends React.Component {
             email: '',
             password: '',
             confirmpassword: '',
-            buttonDisabled: false
+            buttonDisabled: false,
+            notif: {
+                active: false,
+                type: "",
+                message: ""
+            }
         }
     }
 
@@ -32,12 +38,29 @@ export default class RegisterForm extends React.Component {
         })
     }
 
+    removeMessage = () => {
+        this.setState({
+            notif: { ...this.state.notif, active: !this.state.notif.active }
+        })
+    }
+
     async register(){
         // validate if all fields are not empty. do not allow if one is left blank
-        if (!this.state.username){return;}
-        if (!this.state.email){return;}
-        if (!this.state.password){return;}
-        if (!this.state.confirmpassword){return;}
+        //if (!this.state.username){return;}
+        //if (!this.state.email){return;}
+        //if (!this.state.password){return;}
+        //if (!this.state.confirmpassword){return;}
+        if(!this.state.username || !this.state.email || !this.state.password || !this.state.confirmpassword){
+            this.setState({
+                notif: {
+                    active: true,
+                    type: "danger",
+                    message: "Please fill in all fields!"
+                }
+            })
+            console.log(this.state.notif);
+            return;
+        }
         
         // disable button to prevent multiple request
         this.setState({buttonDisabled: true});
@@ -62,14 +85,27 @@ export default class RegisterForm extends React.Component {
             let result = await request.json();
 
             if (result && result.success) {
-                console.log(result);
-
+                
                 this.resetForm();
-                alert(result.msg);
+
+                this.setState({
+                    notif: {
+                        active: true,
+                        type: "success",
+                        message: result.msg
+                    }
+                })
+
             }
             else if (result && result.success == false) {
                 this.resetForm();
-                alert(result.msg);
+                this.setState({
+                    notif: {
+                        active: true,
+                        type: "danger",
+                        message: result.msg
+                    }
+                })
             }
         }
         catch(e) {
@@ -79,9 +115,12 @@ export default class RegisterForm extends React.Component {
     }
 
     render() {
+        console.log(this.state.notif)
         return (
+            
             <div className="column registerform">
                 <h3 className="title is-3">Register</h3>
+                {this.state.notif.active && <Notification remove={this.removeMessage} notif={this.state.notif}/>}
                 <div className="field">
                     <label className="label">Username</label>
                     <div className="control">

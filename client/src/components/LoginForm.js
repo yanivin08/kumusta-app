@@ -1,13 +1,30 @@
 import React from 'react'
 import InputField from './InputField'
 import SubmitButton from './SubmitButton'
+import Notification from './Notification'
 
 export default class LoginForm extends React.Component {
+
+    state = {
+        notif: { 
+            active: false,
+            type: "",
+            message: ""
+        }
+    }
+
+    removeMessage = () => {
+        this.setState({
+            notif: { ...this.state.notif, active: !this.state.notif.active }
+        })
+    }
+
     render() {
         console.log(this.props.showForms);
         return (
             <div className="column loginform">
                 <h3 className="title is-3">Login</h3>
+                {this.state.notif.active && <Notification remove={this.removeMessage} notif={this.state.notif}/>}
                 <div className="field">
                     <div className="control">
                         <InputField 
