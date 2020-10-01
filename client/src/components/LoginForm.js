@@ -28,7 +28,7 @@ export default class LoginForm extends React.Component {
         })
     }
 
-    login(){
+    async login(){
         if(!this.state.username || !this.state.password){
             this.setState({
                 notif: {
