@@ -86,4 +86,10 @@ router.post('/register', (req, res)=>{
 
 })
 
+
+//POST REQUEST FOR LOGIN
+router.post('/login', (req, res) => {
+   
+})
+
 module.exports = router;
