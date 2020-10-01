@@ -45,11 +45,6 @@ export default class RegisterForm extends React.Component {
     }
 
     async register(){
-        // validate if all fields are not empty. do not allow if one is left blank
-        //if (!this.state.username){return;}
-        //if (!this.state.email){return;}
-        //if (!this.state.password){return;}
-        //if (!this.state.confirmpassword){return;}
         if(!this.state.username || !this.state.email || !this.state.password || !this.state.confirmpassword){
             this.setState({
                 notif: {
@@ -58,7 +53,6 @@ export default class RegisterForm extends React.Component {
                     message: "Please fill in all fields!"
                 }
             })
-            console.log(this.state.notif);
             return;
         }
         

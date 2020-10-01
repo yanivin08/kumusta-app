@@ -6,6 +6,8 @@ import Notification from './Notification'
 export default class LoginForm extends React.Component {
 
     state = {
+        username: "",
+        password: "",
         notif: { 
             active: false,
             type: "",
@@ -17,6 +19,26 @@ export default class LoginForm extends React.Component {
         this.setState({
             notif: { ...this.state.notif, active: !this.state.notif.active }
         })
+    }
+
+    setInputValue(property, val){
+        val = val.trim();
+        this.setState({
+            [property]: val
+        })
+    }
+
+    login(){
+        if(!this.state.username || !this.state.password){
+            this.setState({
+                notif: {
+                    active: true,
+                    type: "danger",
+                    message: "Please fill in all fields!"
+                }
+            })
+            return;
+        }
     }
 
     render() {
@@ -31,6 +53,7 @@ export default class LoginForm extends React.Component {
                             type="text"
                             classname="input"
                             placeholder="Username"
+                            onChange={ (val) => this.setInputValue('username', val) }
                         />
                     </div>
                 </div>
@@ -41,6 +64,7 @@ export default class LoginForm extends React.Component {
                             type="password"
                             classname="input"
                             placeholder="Password"
+                            onChange={ (val) => this.setInputValue('password', val) }
                         />
                     </div>
                 </div>
@@ -53,6 +77,7 @@ export default class LoginForm extends React.Component {
                                     classname="button is-info"
                                     value="LOG IN"
                                     text="Login"
+                                    onclick={ () => this.login() }
                                 />
                             </div>
                         </div>
