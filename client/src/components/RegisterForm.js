@@ -36,6 +36,9 @@ export default class RegisterForm extends React.Component {
             confirmpassword: '',
             buttonDisabled: false
         })
+
+        Array.from(document.getElementsByTagName('input'))
+        .forEach(elem => elem.value = "");
     }
 
     removeMessage = () => {
@@ -91,7 +94,10 @@ export default class RegisterForm extends React.Component {
                 })
 
             }
-            else if (result && result.success == false) {
+            else if (result && result.success === false) {
+                console.log(result);
+                console.log(result.err_data);
+
                 this.resetForm();
                 this.setState({
                     notif: {
