@@ -58,17 +58,17 @@ export default class LoginForm extends React.Component {
                 let result = await request.json();
 
                 if (result && result.success) {
-                    this.resetForm();
+                    // this.resetForm();
                     this.setState({
                         notif: {
                             active: true,
                             type: "success",
                             message: result.msg
                         }
-                    })
+                    });
                 }
-                else if (result && result.success == false) {
-                    this.resetForm();
+                else if (result && result.success === false) {
+                    // this.resetForm();
                     this.setState({
                         notif: {
                             active: true,
@@ -80,7 +80,7 @@ export default class LoginForm extends React.Component {
             }
             catch(e) {
                 console.log(e);
-                this.resetForm();
+                // this.resetForm();
             }
         }
     }
@@ -95,7 +95,7 @@ export default class LoginForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="text"
-                            classname="input"
+                            className="input"
                             placeholder="Username"
                             onChange={ (val) => this.setInputValue('username', val) }
                         />
@@ -106,7 +106,7 @@ export default class LoginForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="password"
-                            classname="input"
+                            className="input"
                             placeholder="Password"
                             onChange={ (val) => this.setInputValue('password', val) }
                         />
@@ -118,7 +118,7 @@ export default class LoginForm extends React.Component {
                         <div className="level-left">
                             <div className="control">
                                 <SubmitButton 
-                                    classname="button is-info"
+                                    className="button is-info"
                                     value="LOG IN"
                                     text="Login"
                                     onclick={ () => this.login() }

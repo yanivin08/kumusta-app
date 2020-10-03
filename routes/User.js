@@ -2,8 +2,10 @@ const express = require('express')
 const bcrypt = require('bcryptjs');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const { create_access_token, refresh_access_token } = require('../api/tokens');
 
 const User = require('../models/user');
+const { update } = require('../models/user');
 
 router.get('/', (req, res)=>{
     res.send('You are connected to API for users.');
@@ -86,10 +88,52 @@ router.post('/register', (req, res)=>{
 
 })
 
-
 //POST REQUEST FOR LOGIN
-router.post('/login', (req, res) => {
-   
-})
+router.post('/login', async (req, res) => {
+    try{
+        const { name, password } = req.body;
+
+        User.findOne({ name })
+            .then(async (user) => {
+                if(user){
+                    const valid = await bcrypt.compare(password, user.password);
+                    if(valid) {
+                        console.log(`User ${user.name} is logged in`);
+
+                        const accessToken = create_access_token(name);
+                        const refreshToken = refresh_access_token(name);
+
+                        user.is_logged = true;
+                        user.access_token = accessToken;
+                        user.refresh_token = refreshToken;
+                        await user.save()
+                            .then(user => {
+                                res.send({
+                                    success: true,
+                                    msg: `Welcome, ${user.name}`
+                                });
+                                // res.redirect('./homepage');
+                                // Redirect not working?
+                            });
+                    } else {
+                        res.send({
+                            success: false,
+                            msg: 'Incorrect password!'
+                        });
+                    }
+                } else {
+                    res.send({
+                        success: false,
+                        msg: `User ${name} doesn't exist`
+                    })
+                }
+            });
+    } catch(err) {
+        res.send({
+            message: err.message
+        });
+    }
+
+});
 
 module.exports = router;
