@@ -130,7 +130,8 @@ router.post('/login', async (req, res) => {
             });
     } catch(err) {
         res.send({
-            message: err.message
+            success: false,
+            msg: err.message
         });
     }
 
