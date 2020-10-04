@@ -91,7 +91,7 @@ export default class RegisterForm extends React.Component {
                 })
 
             }
-            else if (result && result.success == false) {
+            else if (result && result.success === false) {
                 this.resetForm();
                 this.setState({
                     notif: {
@@ -120,7 +120,7 @@ export default class RegisterForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="text"
-                            classname="input"
+                            className="input"
                             placeholder="Username"
                             onChange={ (val) => this.setInputValue('username', val) }
                         />
@@ -132,7 +132,7 @@ export default class RegisterForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="text"
-                            classname="input"
+                            className="input"
                             placeholder="Email"
                             onChange={ (val) => this.setInputValue('email', val) }
                         />
@@ -144,7 +144,7 @@ export default class RegisterForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="password"
-                            classname="input"
+                            className="input"
                             placeholder="Password"
                             onChange={ (val) => this.setInputValue('password', val) }
                         />
@@ -156,7 +156,7 @@ export default class RegisterForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="password"
-                            classname="input"
+                            className="input"
                             placeholder="Confirm Password"
                             onChange={ (val) => this.setInputValue('confirmpassword', val) }
                         />
@@ -168,7 +168,7 @@ export default class RegisterForm extends React.Component {
                         <div className="level-right">
                             <div className="control">
                                 <SubmitButton 
-                                    classname="submitbutton button is-normal is-info"
+                                    className="submitbutton button is-normal is-info"
                                     text="REGISTER"
                                     disabled={ this.state.buttonDisabled }
                                     onclick={ () => this.register() }

@@ -18,6 +18,18 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    is_logged: {
+        type: Boolean,
+        default: false
+    },
+    access_token: {
+        type: String,
+        default: ''
+    },
+    refresh_token: {
+        type: String,
+        default: ''
+    }
 });
 
 module.exports = User = mongoose.model('user', UserSchema);
