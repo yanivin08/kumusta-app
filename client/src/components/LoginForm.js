@@ -8,6 +8,7 @@ export default class LoginForm extends React.Component {
     state = {
         username: "",
         password: "",
+        buttonDisabled: false,
         notif: { 
             active: false,
             type: "",
@@ -26,6 +27,17 @@ export default class LoginForm extends React.Component {
         this.setState({
             [property]: val
         })
+    }
+
+    resetForm(){
+        this.setState({
+            username: "",
+            password: "",
+            buttonDisabled: false
+        })
+        
+        Array.from(document.getElementsByTagName('input'))
+        .forEach(elem => elem.value = "");
     }
 
     async login(){
@@ -67,7 +79,7 @@ export default class LoginForm extends React.Component {
                         }
                     })
                 }
-                else if (result && result.success == false) {
+                else if (result && result.success === false) {
                     this.resetForm();
                     this.setState({
                         notif: {

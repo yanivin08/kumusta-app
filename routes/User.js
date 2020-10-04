@@ -1,7 +1,8 @@
 const express = require('express')
-const bcrypt = require('bcryptjs');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 const User = require('../models/User');
 
@@ -11,6 +12,10 @@ router.get('/', (req,res)=>{
 
 router.get('/welcome', (req,res)=>{
     res.send('Welcome message from user api.');
+})
+
+router.get('/home', (req, res) => {
+    res.send('Home page');
 })
 
 router.post('/register', (req,res)=>{
@@ -44,10 +49,9 @@ router.post('/register', (req,res)=>{
         .then(user => {
             if(user){
                 //user exist
-                errors.push({ msg: 'Email is already registered' })
                 res.send({
                     success: false,
-                    msg: 'Email is already registered',
+                    msg: 'User already exists.',
                     err_data: errors
                 });
             } else {
@@ -58,23 +62,24 @@ router.post('/register', (req,res)=>{
                 });
 
                 //hash password
-                bcrypt.genSalt(10, (err, salt) => 
+                bcrypt.genSalt(saltRounds, (err, salt) => 
                     bcrypt.hash(newUser.password, salt, (err, hash) => {
                         if(err) throw err;
                         //set password to hashed
                         newUser.password = hash;
-                        //save user
-                        newUser.save()
-                            .then(user => {
-                                res.send({
-                                    success: true,
-                                    msg: 'You are now successfully registered!'
-                                })
-                                res.redirect('./login')
-                            })
-                            .catch(err => console.log(err));
                     })
                 );
+
+                //save user
+                newUser.save()
+                .then(user => {
+                    res.send({
+                        success: true,
+                        msg: 'You are now successfully registered!'
+                    })
+                    res.redirect('./login')
+                })
+                .catch(err => console.log(err));
             }
         });
 
@@ -83,7 +88,34 @@ router.post('/register', (req,res)=>{
 
 //POST REQUEST FOR LOGIN
 router.post('/login', (req, res) => {
-   
+    User.findOne({name: req.body.name})
+    .then(user => {
+        // console.log(user);
+        if (!user){
+            res.send({
+                success: false, 
+                msg: "Username/Password is invalid."
+            });
+        }
+        else {
+            bcrypt.compare(req.body.password, user.password, (err, result) => {
+                console.log("result:", result);
+                if ( result ) {
+                    res.send({
+                        success: true, 
+                        msg: "Password accepted."
+                    });
+                    res.redirect('/home');
+                }
+                else {
+                    res.send({
+                        success: false, 
+                        msg: "Username/Password is invalid."
+                    });
+                }
+            })            
+        }
+    });
 })
 
 module.exports = router;
