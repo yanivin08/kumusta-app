@@ -3,6 +3,8 @@ import InputField from './InputField'
 import SubmitButton from './SubmitButton'
 import Notification from './Notification'
 
+import { Link } from "react-router-dom";
+
 export default class LoginForm extends React.Component {
 
     state = {
@@ -29,6 +31,7 @@ export default class LoginForm extends React.Component {
     }
 
     async login(){
+        console.log(this.state.username, this.state.password)
         if(!this.state.username || !this.state.password){
             this.setState({
                 notif: {
@@ -117,12 +120,14 @@ export default class LoginForm extends React.Component {
                     <div className="level">
                         <div className="level-left">
                             <div className="control">
+                            <Link to={`/chat?`}>
                                 <SubmitButton 
                                     className="button is-info"
                                     value="LOG IN"
                                     text="Login"
                                     onclick={ () => this.login() }
                                 />
+                            </Link>
                             </div>
                         </div>
                         <div className="level-right">
