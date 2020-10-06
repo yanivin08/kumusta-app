@@ -120,7 +120,7 @@ export default class RegisterForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="text"
-                            className="input"
+                            classname="input"
                             placeholder="Username"
                             onChange={ (val) => this.setInputValue('username', val) }
                         />
@@ -132,7 +132,7 @@ export default class RegisterForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="text"
-                            className="input"
+                            classname="input"
                             placeholder="Email"
                             onChange={ (val) => this.setInputValue('email', val) }
                         />
@@ -144,7 +144,7 @@ export default class RegisterForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="password"
-                            className="input"
+                            classname="input"
                             placeholder="Password"
                             onChange={ (val) => this.setInputValue('password', val) }
                         />
@@ -156,7 +156,7 @@ export default class RegisterForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="password"
-                            className="input"
+                            classname="input"
                             placeholder="Confirm Password"
                             onChange={ (val) => this.setInputValue('confirmpassword', val) }
                         />
@@ -168,7 +168,7 @@ export default class RegisterForm extends React.Component {
                         <div className="level-right">
                             <div className="control">
                                 <SubmitButton 
-                                    className="submitbutton button is-normal is-info"
+                                    classname="submitbutton button is-normal is-info"
                                     text="REGISTER"
                                     disabled={ this.state.buttonDisabled }
                                     onclick={ () => this.register() }
