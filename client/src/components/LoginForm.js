@@ -127,6 +127,14 @@ export default class LoginForm extends React.Component {
                     <div className="level">
                         <div className="level-left">
                             <div className="control">
+                            <Link to={`/chat?name=${this.state.username}&room='default room'`}>
+                                <SubmitButton 
+                                    classname="button is-info"
+                                    value="LOG IN"
+                                    text="Login"
+                                    onclick={ () => this.login() }
+                                />
+                            </Link>
                                 {/* <Redirect to={ '/chat' }> */}
                                     <SubmitButton 
                                         classname="button is-info"
@@ -141,7 +149,6 @@ export default class LoginForm extends React.Component {
                                         onSubmit={ () => this.handleSubmit() }>LOGIN
                                     </button> */}
                                 {/* </Redirect> */}
-                                
                             </div>
                         </div>
                         <div className="level-right">
