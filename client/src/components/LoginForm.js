@@ -120,7 +120,7 @@ export default class LoginForm extends React.Component {
                     <div className="level">
                         <div className="level-left">
                             <div className="control">
-                            <Link to={`/chat?`}>
+                            <Link to={`/chat?name=${this.state.username}&room='default room'`}>
                                 <SubmitButton 
                                     className="button is-info"
                                     value="LOG IN"
