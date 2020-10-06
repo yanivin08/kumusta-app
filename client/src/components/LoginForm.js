@@ -105,7 +105,7 @@ export default class LoginForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="text"
-                            className="input"
+                            classname="input"
                             placeholder="Username"
                             onChange={ (val) => this.setInputValue('username', val) }
                         />
@@ -116,7 +116,7 @@ export default class LoginForm extends React.Component {
                     <div className="control">
                         <InputField 
                             type="password"
-                            className="input"
+                            classname="input"
                             placeholder="Password"
                             onChange={ (val) => this.setInputValue('password', val) }
                         />
@@ -129,7 +129,7 @@ export default class LoginForm extends React.Component {
                             <div className="control">
                                 {/* <Redirect to={ '/chat' }> */}
                                     <SubmitButton 
-                                        className="button is-info"
+                                        classname="button is-info"
                                         value="LOG IN"
                                         text="Login"
                                         onclick={ () => this.login() }
