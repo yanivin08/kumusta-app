@@ -82,6 +82,7 @@ app.use('/chat', require('./routes/Chat'));
 
 //production mode
 if(process.env.NODE_ENV === 'production') {
+  console.log("node enf is production");
   app.use( express.static(path.join(__dirname, 'client/build')));
 
   app.get('*', (req, res) => {
@@ -91,7 +92,8 @@ if(process.env.NODE_ENV === 'production') {
 
 //build mode
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/public/index.html'));
+  console.log("node enf is build");
+  res.sendFile(path.join(__dirname + '/client/public/index.html'));
 });
 
 server.listen(port, () => console.log(`Server started on port ${port}`));
