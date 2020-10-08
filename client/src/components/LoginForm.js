@@ -43,7 +43,7 @@ export default class LoginForm extends React.Component {
     }
 
     async login(){
-        console.log(this.state.username, this.state.password)
+        // console.log(this.state.username, this.state.password)
 
         if(!this.state.username || !this.state.password){
             this.setState({
@@ -103,8 +103,8 @@ export default class LoginForm extends React.Component {
     }
 
     render() {
-        console.log(this.props.showForms);
-        console.log(this.state.notif.active);
+        // console.log(this.props.showForms);
+        // console.log(this.state.notif.active);
         if(this.state.isLoggedIn === true) {
             return( <Redirect to="/chat" /> )
         }

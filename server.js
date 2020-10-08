@@ -69,23 +69,14 @@ mongoDB.once('open', function() {
    console.log("MongodDB Connected!");
 });
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-app.get('/isproduction', (req, res) => {
-  // res.send('test lang');
-  res.send(isProduction);
-})
-
 app.use('/user', require('./routes/User'));
 app.use('/chat', require('./routes/Chat'));
 
 //production mode
 if (process.env.NODE_ENV === 'production') {
-  console.log("node env is production");
   app.use( express.static('client/build') );
 
   app.get('*', (req, res) => {
-    console.log('sending file!');
     res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
