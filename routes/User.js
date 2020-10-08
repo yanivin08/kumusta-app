@@ -1,17 +1,23 @@
 const express = require('express')
 const router = express.Router();
 const bodyParser = require('body-parser');
+<<<<<<< HEAD
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
+=======
+const { create_access_token, refresh_access_token } = require('../api/tokens');
+>>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
 
-const User = require('../models/User');
+const User = require('../models/user');
+const { update } = require('../models/user');
 
-router.get('/', (req,res)=>{
+router.get('/', (req, res)=>{
     res.send('You are connected to API for users.');
-})
+});
 
 router.get('/welcome', (req,res)=>{
     res.send('Welcome message from user api.');
+<<<<<<< HEAD
 })
 
 router.get('/home', (req, res) => {
@@ -19,7 +25,11 @@ router.get('/home', (req, res) => {
 })
 
 router.post('/register', (req,res)=>{
+=======
+});
+>>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
 
+router.post('/register', (req, res)=>{
     const { name, email, password, password2 } = req.body;
     let errors = [];
 
@@ -85,8 +95,8 @@ router.post('/register', (req,res)=>{
 
 })
 
-
 //POST REQUEST FOR LOGIN
+<<<<<<< HEAD
 router.post('/login', (req, res) => {
     User.findOne({name: req.body.name})
     .then(user => {
@@ -117,5 +127,54 @@ router.post('/login', (req, res) => {
         }
     });
 })
+=======
+router.post('/login', async (req, res) => {
+    try{
+        const { name, password } = req.body;
+
+        User.findOne({ name })
+            .then(async (user) => {
+                if(user){
+                    const valid = await bcrypt.compare(password, user.password);
+                    if(valid) {
+                        console.log(`User ${user.name} is logged in`);
+
+                        const accessToken = create_access_token(name);
+                        const refreshToken = refresh_access_token(name);
+
+                        user.is_logged = true;
+                        user.access_token = accessToken;
+                        user.refresh_token = refreshToken;
+                        await user.save()
+                            .then(user => {
+                                res.send({
+                                    success: true,
+                                    msg: `Welcome, ${user.name}`
+                                });
+                                // res.redirect('./homepage');
+                                // Redirect not working?
+                            });
+                    } else {
+                        res.send({
+                            success: false,
+                            msg: 'Incorrect password!'
+                        });
+                    }
+                } else {
+                    res.send({
+                        success: false,
+                        msg: `User ${name} doesn't exist`
+                    })
+                }
+            });
+    } catch(err) {
+        res.send({
+            success: false,
+            msg: err.message
+        });
+    }
+
+});
+>>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
 
 module.exports = router;

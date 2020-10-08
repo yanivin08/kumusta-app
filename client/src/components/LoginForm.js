@@ -3,12 +3,18 @@ import InputField from './InputField'
 import SubmitButton from './SubmitButton'
 import Notification from './Notification'
 
+import { Link, Redirect } from "react-router-dom";
+
 export default class LoginForm extends React.Component {
 
     state = {
         username: "",
         password: "",
+<<<<<<< HEAD
         buttonDisabled: false,
+=======
+        isLoggedIn: false,
+>>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
         notif: { 
             active: false,
             type: "",
@@ -41,46 +47,53 @@ export default class LoginForm extends React.Component {
     }
 
     async login(){
+        console.log(this.state.username, this.state.password)
+
         if(!this.state.username || !this.state.password){
             this.setState({
+                isLoggedIn: false,
                 notif: {
                     active: true,
                     type: "danger",
                     message: "Please fill in all fields!"
                 }
-            })
+            });
         }else{
             this.setState({buttonDisabled: true});
 
             try {
-                let userdata = JSON.stringify({
-                    name: this.state.username,
-                    password: this.state.password
-                })
-
                 let request = await fetch('/user/login', {
                     method: 'POST',
+                    credentials: "include",
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: userdata
+                    body: JSON.stringify({
+                        name: this.state.username,
+                        password: this.state.password
+                    })
                 });
 
                 let result = await request.json();
 
                 if (result && result.success) {
-                    this.resetForm();
+                    // this.resetForm();
                     this.setState({
+                        isLoggedIn: true,
                         notif: {
                             active: true,
                             type: "success",
                             message: result.msg
                         }
-                    })
+                    });
                 }
                 else if (result && result.success === false) {
+<<<<<<< HEAD
                     this.resetForm();
+=======
+                    // this.resetForm();
+>>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
                     this.setState({
                         notif: {
                             active: true,
@@ -92,13 +105,17 @@ export default class LoginForm extends React.Component {
             }
             catch(e) {
                 console.log(e);
-                this.resetForm();
+                // this.resetForm();
             }
         }
     }
 
     render() {
         console.log(this.props.showForms);
+        console.log(this.state.notif.active);
+        if(this.state.isLoggedIn === true) {
+            return( <Redirect to="/chat" /> )
+        }
         return (
             <div className="column loginform">
                 <h3 className="title is-3">Login</h3>
@@ -129,12 +146,28 @@ export default class LoginForm extends React.Component {
                     <div className="level">
                         <div className="level-left">
                             <div className="control">
+                            <Link to={`/chat?name=${this.state.username}&room='default room'`}>
                                 <SubmitButton 
                                     classname="button is-info"
                                     value="LOG IN"
                                     text="Login"
                                     onclick={ () => this.login() }
                                 />
+                            </Link>
+                                {/* <Redirect to={ '/chat' }> */}
+                                    <SubmitButton 
+                                        classname="button is-info"
+                                        value="LOG IN"
+                                        text="Login"
+                                        onclick={ () => this.login() }
+                                    />
+                                    {/* <button 
+                                        type="submit" 
+                                        className="button is-info"
+                                        onClick={ () => this.login() }
+                                        onSubmit={ () => this.handleSubmit() }>LOGIN
+                                    </button> */}
+                                {/* </Redirect> */}
                             </div>
                         </div>
                         <div className="level-right">
