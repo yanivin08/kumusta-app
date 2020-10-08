@@ -79,15 +79,13 @@ app.get('/isproduction', (req, res) => {
 app.use('/user', require('./routes/User'));
 app.use('/chat', require('./routes/Chat'));
 
-console.log("dirname is: ", __dirname);
-console.log(path.join(__dirname,"client/build/index.html"));
-
 //production mode
 if (process.env.NODE_ENV === 'production') {
   console.log("node env is production");
-  app.use( express.static('client/build'));
+  app.use( express.static('client/build') );
 
   app.get('*', (req, res) => {
+    console.log('sending file!');
     res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
