@@ -135,20 +135,6 @@ export default class LoginForm extends React.Component {
                                     onclick={ () => this.login() }
                                 />
                             </Link>
-                                {/* <Redirect to={ '/chat' }> */}
-                                    <SubmitButton 
-                                        classname="button is-info"
-                                        value="LOG IN"
-                                        text="Login"
-                                        onclick={ () => this.login() }
-                                    />
-                                    {/* <button 
-                                        type="submit" 
-                                        className="button is-info"
-                                        onClick={ () => this.login() }
-                                        onSubmit={ () => this.handleSubmit() }>LOGIN
-                                    </button> */}
-                                {/* </Redirect> */}
                             </div>
                         </div>
                         <div className="level-right">

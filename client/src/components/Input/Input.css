@@ -3,10 +3,10 @@
     border-top: 2px solid #D3D3D3;
   }
   
-  .input {
+  .message-input {
     border: none;
     border-radius: 0;
-    padding: 5%;
+    padding: 3%;
     width: 80%;
     font-size: 1.2em;
   }
