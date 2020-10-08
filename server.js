@@ -2,7 +2,6 @@ const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const port = process.env.PORT || 5000;
 const socketio = require('socket.io');
 const cors = require('cors');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./routes/users');
@@ -80,20 +79,19 @@ app.get('/isproduction', (req, res) => {
 app.use('/user', require('./routes/User'));
 app.use('/chat', require('./routes/Chat'));
 
+console.log("dirname is: ", __dirname);
+console.log(path.join(__dirname,"client/build/index.html"));
+
 //production mode
-if(process.env.NODE_ENV === 'production') {
-  console.log("node enf is production");
-  app.use( express.static(path.join(__dirname, 'client/build')));
+if (process.env.NODE_ENV === 'production') {
+  console.log("node env is production");
+  app.use( express.static('client/build'));
 
   app.get('*', (req, res) => {
-    res.sendfile(path.join(__dirname, 'client/build/index.html'));
+    res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
 
-//build mode
-app.get('*', (req, res) => {
-  console.log("node enf is build");
-  res.sendFile(path.join(__dirname + '/client/public/index.html'));
-});
+const port = process.env.PORT || 5000;
 
 server.listen(port, () => console.log(`Server started on port ${port}`));
