@@ -8,7 +8,7 @@ import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import './Chat.css';
 
-const ENDPOINT = 'localhost:5000';
+const ENDPOINT = window.location.hostname + ':5000';
 
 let socket;
 
@@ -21,7 +21,7 @@ const Chat = ( {location} ) => {
 
     useEffect(() => {
         const { name, room } = queryString.parse(location.search);
-      
+        
         socket = io(ENDPOINT);
     
         setName(name)
