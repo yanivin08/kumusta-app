@@ -95,12 +95,6 @@ export default class RegisterForm extends React.Component {
 
             }
             else if (result && result.success === false) {
-<<<<<<< HEAD
-                console.log(result);
-                console.log(result.err_data);
-
-=======
->>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
                 this.resetForm();
                 this.setState({
                     notif: {

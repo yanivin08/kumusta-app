@@ -1,12 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const bodyParser = require('body-parser');
-<<<<<<< HEAD
-const bcrypt = require('bcryptjs');
-const saltRounds = 10;
-=======
 const { create_access_token, refresh_access_token } = require('../api/tokens');
->>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
 
 const User = require('../models/user');
 const { update } = require('../models/user');
@@ -17,17 +12,7 @@ router.get('/', (req, res)=>{
 
 router.get('/welcome', (req,res)=>{
     res.send('Welcome message from user api.');
-<<<<<<< HEAD
-})
-
-router.get('/home', (req, res) => {
-    res.send('Home page');
-})
-
-router.post('/register', (req,res)=>{
-=======
 });
->>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
 
 router.post('/register', (req, res)=>{
     const { name, email, password, password2 } = req.body;
@@ -96,38 +81,6 @@ router.post('/register', (req, res)=>{
 })
 
 //POST REQUEST FOR LOGIN
-<<<<<<< HEAD
-router.post('/login', (req, res) => {
-    User.findOne({name: req.body.name})
-    .then(user => {
-        // console.log(user);
-        if (!user){
-            res.send({
-                success: false, 
-                msg: "Username/Password is invalid."
-            });
-        }
-        else {
-            bcrypt.compare(req.body.password, user.password, (err, result) => {
-                console.log("result:", result);
-                if ( result ) {
-                    res.send({
-                        success: true, 
-                        msg: "Password accepted."
-                    });
-                    res.redirect('/home');
-                }
-                else {
-                    res.send({
-                        success: false, 
-                        msg: "Username/Password is invalid."
-                    });
-                }
-            })            
-        }
-    });
-})
-=======
 router.post('/login', async (req, res) => {
     try{
         const { name, password } = req.body;
@@ -175,6 +128,5 @@ router.post('/login', async (req, res) => {
     }
 
 });
->>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
 
 module.exports = router;

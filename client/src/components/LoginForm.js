@@ -10,11 +10,7 @@ export default class LoginForm extends React.Component {
     state = {
         username: "",
         password: "",
-<<<<<<< HEAD
-        buttonDisabled: false,
-=======
         isLoggedIn: false,
->>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
         notif: { 
             active: false,
             type: "",
@@ -89,11 +85,7 @@ export default class LoginForm extends React.Component {
                     });
                 }
                 else if (result && result.success === false) {
-<<<<<<< HEAD
-                    this.resetForm();
-=======
                     // this.resetForm();
->>>>>>> 20d08fddcb9bb5945eadd6696ad170fbd170e7f0
                     this.setState({
                         notif: {
                             active: true,
@@ -154,14 +146,14 @@ export default class LoginForm extends React.Component {
                                     onclick={ () => this.login() }
                                 />
                             </Link>
-                                {/* <Redirect to={ '/chat' }> */}
+                                {/* <Redirect to={ '/chat' }> 
                                     <SubmitButton 
                                         classname="button is-info"
                                         value="LOG IN"
                                         text="Login"
                                         onclick={ () => this.login() }
                                     />
-                                    {/* <button 
+                                    <button 
                                         type="submit" 
                                         className="button is-info"
                                         onClick={ () => this.login() }
