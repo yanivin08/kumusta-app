@@ -1,4 +1,5 @@
 const express = require('express')
+const bcrypt = require('bcryptjs');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const { create_access_token, refresh_access_token } = require('../api/tokens');
@@ -19,64 +20,71 @@ router.post('/register', (req, res)=>{
     let errors = [];
 
     if(!name || !email || !password || !password2){
-        res.send({
-            success: false,
-            msg: 'Please fill in all fields' 
-        });
+        errors.push({ msg: 'Please fill in all fields' });
     }
 
     if(password !== password2){
-        res.send({
-            success: false,
-            msg: 'Passwords did not match' 
-        });
+        errors.push({ msg: 'Passwords do not match' });
     }
 
     if(password.length < 6){
+        errors.push({ msg: 'Password should be at least 6 characters'})
+    }
+
+    if(errors.length > 0){
+        // res.send('register', {
+        //     errors,
+        //     name,
+        //     email,
+        //     password,
+        //     password2
+        // });
         res.send({
             success: false,
-            msg: 'Password should be at least 6 characters' 
-        });
-    }
-    
-    //validation passed
-    User.findOne({ email: email })
-        .then(user => {
-            if(user){
-                //user exist
-                res.send({
-                    success: false,
-                    msg: 'User already exists.',
-                    err_data: errors
-                });
-            } else {
-                const newUser = new User({
-                    name,
-                    email,
-                    password
-                });
+            msg: "Error occurs, please try again.",
+            err_data: errors
+        })
 
-                //hash password
-                bcrypt.genSalt(saltRounds, (err, salt) => 
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        if(err) throw err;
-                        //set password to hashed
-                        newUser.password = hash;
-                    })
-                );
-
-                //save user
-                newUser.save()
-                .then(user => {
+    }else{
+        //validation passed
+        User.findOne({ email: email })
+            .then(user => {
+                if(user){
+                    //user exist
+                    errors.push({ msg: 'Email is already registered' })
                     res.send({
-                        success: true,
-                        msg: 'You are now successfully registered!'
-                    })
-                    res.redirect('./login')
-                })
-                .catch(err => console.log(err));
-            }
-        });
+                        success: false,
+                        msg: 'Email is already registered',
+                        err_data: errors
+                    });
+                } else {
+                    const newUser = new User({
+                        name,
+                        email,
+                        password
+                    });
+
+                    //hash password
+                    bcrypt.genSalt(10, (err, salt) => 
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                            if(err) throw err;
+                            //set password to hashed
+                            newUser.password = hash;
+                            //save user
+                            newUser.save()
+                                .then(user => {
+                                    res.send({
+                                        success: true,
+                                        msg: 'You are now successfully registered!'
+                                    })
+                                    res.redirect('./login')
+                                })
+                                .catch(err => console.log(err));
+                        })
+                    );
+                }
+            });
+    }
 
 })
 

@@ -7,6 +7,7 @@ const socketio = require('socket.io');
 const cors = require('cors');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./routes/users');
 const router = require('./routes/Chat');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -71,5 +72,15 @@ mongoDB.once('open', function() {
 
 app.use('/user', require('./routes/User'));
 app.use('/chat', require('./routes/Chat'));
+
+// Serve static assests if in production
+if ( process.env.NODE_ENV === 'production' ) {
+  // set static folder
+  app.use( express.static('client/build'));
+
+  app.get('*', (req,res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 server.listen(port, () => console.log(`Server started on port ${port}`));
