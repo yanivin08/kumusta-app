@@ -15,6 +15,10 @@ class App extends React.Component {
     await fetch('/user')
     .then(resp => resp.text())
     .then(data => console.log(data));
+
+    await fetch('/isproduction')
+    .then(resp => resp.text())
+    .then(data => console.log("is production? "+data));
   }
 
   render(){

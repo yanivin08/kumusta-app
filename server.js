@@ -70,6 +70,13 @@ mongoDB.once('open', function() {
    console.log("MongodDB Connected!");
 });
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+app.get('/isproduction', (req, res) => {
+  // res.send('test lang');
+  res.send(isProduction);
+})
+
 app.use('/user', require('./routes/User'));
 app.use('/chat', require('./routes/Chat'));
 
