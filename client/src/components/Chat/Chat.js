@@ -8,7 +8,7 @@ import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import './Chat.css';
 
-const ENDPOINT = window.location.hostname + ':5000';
+const ENDPOINT = 'localhost:5000';
 
 let socket;
 
