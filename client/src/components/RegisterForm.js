@@ -36,6 +36,9 @@ export default class RegisterForm extends React.Component {
             confirmpassword: '',
             buttonDisabled: false
         })
+
+        Array.from(document.getElementsByTagName('input'))
+        .forEach(elem => elem.value = "");
     }
 
     removeMessage = () => {

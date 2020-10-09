@@ -2,11 +2,11 @@ const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const port = process.env.PORT || 5000;
 const socketio = require('socket.io');
 const cors = require('cors');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./routes/users');
 const router = require('./routes/Chat');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -71,5 +71,16 @@ mongoDB.once('open', function() {
 
 app.use('/user', require('./routes/User'));
 app.use('/chat', require('./routes/Chat'));
+
+//production mode
+if (process.env.NODE_ENV === 'production') {
+  app.use( express.static('client/build') );
+
+  app.get('*', (req, res) => {
+    res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
+const port = process.env.PORT || 5000;
 
 server.listen(port, () => console.log(`Server started on port ${port}`));
