@@ -9,7 +9,7 @@ import Input from '../Input/Input';
 import './Chat.css';
 
 //Chaneg ENDPOINT to URL of Heroku
-const ENDPOINT = 'http://kumusta-app.heroku.com/';
+const ENDPOINT = 'localhost:5000';
 
 let socket;
 
