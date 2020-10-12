@@ -26,8 +26,8 @@ const Chat = ( {location} ) => {
       
       socket = io(ENDPOINT);
   
-        setName(name)
-        setRoom(room)
+        setName(UserStore.username)
+        setRoom('default room')
       
         socket.emit('join', { name, room }, (error) => {
           if(error) {
