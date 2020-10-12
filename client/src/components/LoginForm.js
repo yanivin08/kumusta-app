@@ -2,8 +2,9 @@ import React from 'react'
 import InputField from './InputField'
 import SubmitButton from './SubmitButton'
 import Notification from './Notification'
+import UserStore from './UserStore'
 
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export default class LoginForm extends React.Component {
 
@@ -43,8 +44,6 @@ export default class LoginForm extends React.Component {
     }
 
     async login(){
-        // console.log(this.state.username, this.state.password)
-
         if(!this.state.username || !this.state.password){
             this.setState({
                 isLoggedIn: false,
@@ -75,6 +74,10 @@ export default class LoginForm extends React.Component {
 
                 if (result && result.success) {
                     // this.resetForm();
+                    
+                    UserStore.isLoggedIn = true;
+                    UserStore.username = this.state.username;
+
                     this.setState({
                         isLoggedIn: true,
                         notif: {
@@ -103,10 +106,10 @@ export default class LoginForm extends React.Component {
     }
 
     render() {
-        // console.log(this.props.showForms);
-        // console.log(this.state.notif.active);
-        if(this.state.isLoggedIn === true) {
-            return( <Redirect to="/chat" /> )
+        if(this.state.isLoggedIn === true && this.state.username !== '') {
+            return (
+                <Redirect to={`/chat?name=${this.state.username}&room='default room'`}></Redirect>
+            )
         }
         return (
             <div className="column loginform">
@@ -138,14 +141,12 @@ export default class LoginForm extends React.Component {
                     <div className="level">
                         <div className="level-left">
                             <div className="control">
-                            <Link to={`/chat?name=${this.state.username}&room='default room'`}>
                                 <SubmitButton 
                                     classname="button is-info"
                                     value="LOG IN"
                                     text="Login"
                                     onclick={ () => this.login() }
                                 />
-                            </Link>
                             </div>
                         </div>
                         <div className="level-right">
