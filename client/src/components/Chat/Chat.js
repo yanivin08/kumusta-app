@@ -7,8 +7,10 @@ import Messages from '../Messages/Messages';
 import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import './Chat.css';
+import UserStore from '../UserStore'
+import { Redirect } from "react-router-dom";
 
-const ENDPOINT = 'localhost:5000';
+const ENDPOINT = window.location.origin;
 
 let socket;
 
@@ -20,39 +22,47 @@ const Chat = ( {location} ) => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        const { name, room } = queryString.parse(location.search);
-        
-        socket = io(ENDPOINT);
-    
+      const { name, room } = queryString.parse(location.search);
+      
+      socket = io(ENDPOINT);
+  
         setName(name)
         setRoom(room)
-
+      
         socket.emit('join', { name, room }, (error) => {
           if(error) {
             alert(error);
           }
         });
-      }, [ENDPOINT, location.search]);
+      
+    }, [ENDPOINT, location.search]);
 
-      useEffect(() => {
-        socket.on('message', message => {
-            setMessages(messages => [ ...messages, message ]);
-        });
-        
-        socket.on("roomData", ({ users }) => {
-          setUsers(users);
-        });
-      }, []);
+    useEffect(() => {
+      socket.on('message', message => {
+          setMessages(messages => [ ...messages, message ]);
+      });
+      
+      socket.on("roomData", ({ users }) => {
+        setUsers(users);
+      });
 
-      const sendMessage = (event) => {
-        event.preventDefault();
-    
-        if(message) {
-          socket.emit('sendMessage', message, () => setMessage(''));
-        }
+    }, []);
+
+    const sendMessage = (event) => {
+      event.preventDefault();
+  
+      if(message) {
+        socket.emit('sendMessage', message, () => setMessage(''));
       }
+    }
 
-    return (
+    if ( name === '') {
+      return (
+        <div>Loading...</div>
+      )
+    }
+    else if ( UserStore.isLoggedIn && UserStore.username === name ) {
+      return (
         <div className="outerContainerNotBulma">
             <div className="containerNotBulma">
                 <InfoBar user={name}/>
@@ -61,7 +71,13 @@ const Chat = ( {location} ) => {
             </div>
             <TextContainer users={users}/>
         </div>
-    );
-  }
+      )
+    }
+    else {
+      return (
+        <Redirect to={`/`}></Redirect>
+      )
+    }
+}
 
   export default Chat;
