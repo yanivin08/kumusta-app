@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const { create_access_token, refresh_access_token } = require('../api/tokens');
+const { is_authorized } = require('../api/auth');
 
 const User = require('../models/user');
 const { update } = require('../models/user');
@@ -106,11 +107,13 @@ router.post('/login', async (req, res) => {
                         user.is_logged = true;
                         user.access_token = accessToken;
                         user.refresh_token = refreshToken;
+
                         await user.save()
                             .then(user => {
                                 res.send({
                                     success: true,
-                                    msg: `Welcome, ${user.name}`
+                                    msg: `Welcome, ${user.name}`,
+                                    access_token: accessToken
                                 });
                                 // res.redirect('./homepage');
                                 // Redirect not working?
@@ -135,6 +138,21 @@ router.post('/login', async (req, res) => {
         });
     }
 
+});
+
+router.post("/auth", async (req, res) => {
+    try {
+        const id = is_authorized(req);
+        if(id !== null) {
+            res.send({
+                success: true
+            });
+        }
+    } catch(e) {
+        res.send({
+            success: false
+        })
+    }
 });
 
 module.exports = router;
