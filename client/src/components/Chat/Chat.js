@@ -22,12 +22,14 @@ const Chat = ( {location} ) => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-      const { name, room } = queryString.parse(location.search);
-      
+//       const { name, room } = queryString.parse(location.search);
+      const name = UserStore.username;
+      const room = 'default room';
+        
       socket = io(ENDPOINT);
   
-        setName(UserStore.username)
-        setRoom('default room')
+        setName(name);
+        setRoom(room);
       
         socket.emit('join', { name, room }, (error) => {
           if(error) {
