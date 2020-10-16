@@ -78,7 +78,7 @@ const Chat = ( {location} ) => {
 
     if ( name === '') {
       return (
-        <div>Loading...</div>
+        <div>User not logged in.</div>
       )
     }
     else if ( UserStore.isLoggedIn && UserStore.username === name ) {
