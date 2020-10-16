@@ -77,6 +77,7 @@ export default class LoginForm extends React.Component {
                     
                     UserStore.isLoggedIn = true;
                     UserStore.username = this.state.username;
+                    UserStore.access_token = result.access_token;
 
                     this.setState({
                         isLoggedIn: true,
@@ -108,7 +109,7 @@ export default class LoginForm extends React.Component {
     render() {
         if(this.state.isLoggedIn === true && this.state.username !== '') {
             return (
-                <Redirect to={`/chat?name=${this.state.username}&room='default room'`}></Redirect>
+                <Redirect to={`/chat`}></Redirect>
             )
         }
         return (

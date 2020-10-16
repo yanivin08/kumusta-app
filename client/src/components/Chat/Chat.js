@@ -8,7 +8,7 @@ import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import './Chat.css';
 import UserStore from '../UserStore'
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 const ENDPOINT = window.location.origin;
 
@@ -22,12 +22,32 @@ const Chat = ( {location} ) => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-      const { name, room } = queryString.parse(location.search);
-      
+      async function auth() {
+        const result = await (await fetch('/user/auth', { 
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${UserStore.access_token}`
+          }
+        })).json();
+
+        if (!result.data){
+          return ( <Redirect to={`/`}></Redirect> )
+        }
+      }
+      auth();
+    }, []); // Added authorization when connecting to chat
+
+    useEffect(() => {
+//       const { name, room } = queryString.parse(location.search);
+      const name = UserStore.username;
+      const room = 'default room';
+        
       socket = io(ENDPOINT);
   
-        setName(name)
-        setRoom(room)
+        setName(name);
+        setRoom(room);
       
         socket.emit('join', { name, room }, (error) => {
           if(error) {
@@ -58,7 +78,13 @@ const Chat = ( {location} ) => {
 
     if ( name === '') {
       return (
-        <div>Loading...</div>
+        <div>
+          <div className="notification is-danger">
+            User not logged in.
+          </div>
+          
+          <Link to="/" className="button is-info">LOG IN</Link>
+        </div>
       )
     }
     else if ( UserStore.isLoggedIn && UserStore.username === name ) {
@@ -80,4 +106,4 @@ const Chat = ( {location} ) => {
     }
 }
 
-  export default Chat;
+export default Chat;

@@ -1,14 +1,18 @@
 const users = [];
 
 const addUser = ({ id, name, room }) => {
-  name = name.trim().toLowerCase();
-  room = room.trim().toLowerCase();
+  try{
+    name = name.trim().toLowerCase();
+    room = room.trim().toLowerCase();
 
-  const user = { id, name, room };
+    const user = { id, name, room };
 
-  users.push(user);
+    users.push(user);
 
-  return { user };
+    return { user };
+  } catch(e) {
+    return { }
+  }
 }
 
 const removeUser = (id) => {
