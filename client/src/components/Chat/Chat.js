@@ -8,7 +8,7 @@ import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import './Chat.css';
 import UserStore from '../UserStore'
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 const ENDPOINT = window.location.origin;
 
