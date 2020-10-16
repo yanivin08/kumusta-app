@@ -22,6 +22,24 @@ const Chat = ( {location} ) => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
+      async function auth() {
+        const result = await (await fetch('/user/auth', { 
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${UserStore.access_token}`
+          }
+        })).json();
+
+        if (!result.data){
+          return ( <Redirect to={`/`}></Redirect> )
+        }
+      }
+      auth();
+    }, []); // Added authorization when connecting to chat
+
+    useEffect(() => {
 //       const { name, room } = queryString.parse(location.search);
       const name = UserStore.username;
       const room = 'default room';
@@ -82,4 +100,4 @@ const Chat = ( {location} ) => {
     }
 }
 
-  export default Chat;
+export default Chat;

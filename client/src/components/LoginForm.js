@@ -77,6 +77,7 @@ export default class LoginForm extends React.Component {
                     
                     UserStore.isLoggedIn = true;
                     UserStore.username = this.state.username;
+                    UserStore.access_token = result.access_token;
 
                     this.setState({
                         isLoggedIn: true,
